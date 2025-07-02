@@ -1,4 +1,4 @@
-name: Publish to Maven Central
+name: Publish Library to Maven Central
 
 on:
   push:
@@ -12,6 +12,7 @@ env:
 
 jobs:
   publish:
+    name: Publish to Maven Central
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +26,8 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v3
 
-      - name: Publish to Maven Central
-        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }}
-
+      - name: Publish
+        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository \
+                -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} \
+                -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }} \
+                -PmavenCentralDryRun=true
