@@ -89,3 +89,17 @@ afterEvaluate {
         }
     }
 }
+
+import java.util.Base64
+
+val decodedSecretKey = findProperty("signing.secretKey")?.let {
+    String(Base64.getDecoder().decode(it.toString()))
+}
+
+signing {
+    useInMemoryPgpKeys(
+        findProperty("signing.keyId") as String?,
+        decodedSecretKey,
+        findProperty("signing.password") as String?
+    )
+}
