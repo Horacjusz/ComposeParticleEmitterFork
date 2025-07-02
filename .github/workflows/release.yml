@@ -5,11 +5,6 @@ on:
     tags:
       - 'v*'
 
-env:
-  SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-  SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-  SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-
 jobs:
   publish:
     name: Publish to Maven Central
@@ -27,4 +22,4 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Publish
-        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }} -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }} -Psigning.password=${{ secrets.SIGNING_PASSWORD }} -Psigning.secretKey="${{ secrets.SIGNING_KEY }}"
+        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }} -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }} -Psigning.password=${{ secrets.SIGNING_PASSWORD }} -Psigning.secretKey=${{ secrets.SIGNING_KEY }}
