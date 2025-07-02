@@ -55,7 +55,7 @@ dependencies {
 
 afterEvaluate {
     mavenPublishing {
-        publishToMavenCentral("S01", useCentralPortal = true)
+        publishToMavenCentral()
         signAllPublications()
         coordinates("io.github.horacjusz", "composeparticleemitter", VERSION_NAME)
 
