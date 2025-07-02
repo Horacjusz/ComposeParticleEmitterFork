@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("io.deepmedia.tools.deployer") version "0.13.0"
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 android {
@@ -42,37 +42,43 @@ android {
     }
 }
 
-deployer {
-    // 1. Artifact definition.
-    // https://opensource.deepmedia.io/deployer/artifacts
-    content {
-        kotlinComponents()
-    }
-
-    // 2. Project details.
-    // https://opensource.deepmedia.io/deployer/configuration
-    projectInfo {
-        description = "A lightweight library to play with canvas particle emitter"
-        url = "https://github.com/PiotrPrus/ComposeParticleEmitter"
-        scm.fromGithub("PiotrPrus", "ComposeParticleEmitter")
-        license(apache2)
-        developer("PiotrPrus", "prus.piotr@gmail.com", "PiotrPrus", "https://github.com")
-        groupId = "dev.piotrprus"
-    }
-
-    // 3. Central Portal configuration.
-    // https://opensource.deepmedia.io/deployer/repos/central-portal
-    centralPortalSpec {
-        signing.key = secret("SIGNING_KEY")
-        signing.password = secret("SIGNING_PASSPHRASE")
-        auth.user = secret("UPLOAD_USERNAME")
-        auth.password = secret("UPLOAD_PASSWORD")
-    }
-}
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates("io.github.horacjusz", "composeparticleemitter", VERSION_NAME)
+
+    pom {
+        name.set("ComposeParticleEmitter")
+        description.set("A lightweight library to play with canvas particle emitter")
+        inceptionYear.set("2025")
+        url.set("https://github.com/PiotrPrus/ComposeParticleEmitter")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("PiotrPrus")
+                name.set("Piotr Prus")
+                email.set("prus.piotr@gmail.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/PiotrPrus/ComposeParticleEmitter")
+            connection.set("scm:git:git://github.com/PiotrPrus/ComposeParticleEmitter.git")
+            developerConnection.set("scm:git:ssh://git@github.com:PiotrPrus/ComposeParticleEmitter.git")
+        }
+    }
 }
