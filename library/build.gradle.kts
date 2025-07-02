@@ -55,7 +55,10 @@ dependencies {
 
 afterEvaluate {
     mavenPublishing {
-        publishToMavenCentral(automaticRelease = true)
+        publishToMavenCentral(
+            host = SonatypeHost.CENTRAL_PORTAL,
+            automaticRelease = true
+        )
         signAllPublications()
         coordinates("io.github.horacjusz", "composeparticleemitter", VERSION_NAME)
 
