@@ -97,6 +97,9 @@ signing {
     val signingPassword = System.getenv("SIGNING_PASSWORD")
 
     if (signingKey != null && signingPassword != null) {
+        println("SIGNING_KEY length: ${key?.length}")
+        println("SIGNING_KEY_ID: $keyId")
+
         useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
         sign(publishing.publications)
     } else {
