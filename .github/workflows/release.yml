@@ -26,6 +26,5 @@ jobs:
         uses: gradle/gradle-build-action@v3
 
       - name: Publish to Maven Central
-        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository \
-              -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} \
-              -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }}
+        run: ./gradlew :library:publishAllPublicationsToMavenCentralRepository -PmavenCentralUsername=${{ secrets.OSSRH_USERNAME }} -PmavenCentralPassword=${{ secrets.OSSRH_PASSWORD }}
+
