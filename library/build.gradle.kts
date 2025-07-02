@@ -92,13 +92,16 @@ afterEvaluate {
 }
 
 signing {
-    useInMemoryPgpKeys(
-        findProperty("signing.keyId")?.toString(),
-        findProperty("signing.secretKey")?.toString(),
-        findProperty("signing.password")?.toString()
-    )
-    sign(publishing.publications)
+    val keyId = System.getenv("SIGNING_KEY_ID")
+    val secretKey = System.getenv("SIGNING_KEY")
+    val password = System.getenv("SIGNING_PASSWORD")
+
+    if (!secretKey.isNullOrBlank()) {
+        useInMemoryPgpKeys(keyId, secretKey, password)
+        sign(publishing.publications)
+    }
 }
+
 
 
 
