@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.vanniktech.maven.publish") version "0.30.0"
+    id("signing")
 }
 
 android {
