@@ -1,5 +1,4 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import java.util.Base64
 
 val VERSION_NAME: String by project
 
@@ -93,15 +92,13 @@ afterEvaluate {
 }
 
 signing {
-    val decodedKey = findProperty("signing.secretKey")?.let {
-        String(Base64.getDecoder().decode(it.toString()))
-    }
-
     useInMemoryPgpKeys(
         findProperty("signing.keyId")?.toString(),
-        decodedKey,
+        findProperty("signing.secretKey")?.toString(),
         findProperty("signing.password")?.toString()
     )
     sign(publishing.publications)
 }
+
+
 
