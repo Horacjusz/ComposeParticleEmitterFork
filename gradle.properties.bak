@@ -22,4 +22,6 @@ kotlin.code.style=official
 # thereby reducing the size of the R class for that library
 android.nonTransitiveRClass=true
 
+# The version of the Android Gradle Plugin used in this project.
+VERSION_NAME=0.0.32
 

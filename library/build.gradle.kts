@@ -1,11 +1,35 @@
+import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("io.deepmedia.tools.deployer") version "0.13.0"
+    id("com.vanniktech.maven.publish") version 0.28.0
+    alias(libs.plugins.vanniktech.mavenPublish)
+
+}
+
+kotlin {
+    androidTarget {
+        publishLibraryVariants("release")
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                //put your multiplatform dependencies here
+            }
+        }
+    }
 }
 
 android {
-    namespace = "dev.piotrprus.composeparticleemitter"
+    namespace = "io.github.horacjusz"
     compileSdk = 34
 
     defaultConfig {
@@ -42,37 +66,48 @@ android {
     }
 }
 
-deployer {
-    // 1. Artifact definition.
-    // https://opensource.deepmedia.io/deployer/artifacts
-    content {
-        kotlinComponents()
-    }
-
-    // 2. Project details.
-    // https://opensource.deepmedia.io/deployer/configuration
-    projectInfo {
-        description = "A lightweight library to play with canvas particle emitter"
-        url = "https://github.com/PiotrPrus/ComposeParticleEmitter"
-        scm.fromGithub("PiotrPrus", "ComposeParticleEmitter")
-        license(apache2)
-        developer("PiotrPrus", "prus.piotr@gmail.com", "PiotrPrus", "https://github.com")
-        groupId = "dev.piotrprus"
-    }
-
-    // 3. Central Portal configuration.
-    // https://opensource.deepmedia.io/deployer/repos/central-portal
-    centralPortalSpec {
-        signing.key = secret("SIGNING_KEY")
-        signing.password = secret("SIGNING_PASSPHRASE")
-        auth.user = secret("UPLOAD_USERNAME")
-        auth.password = secret("UPLOAD_PASSWORD")
-    }
-}
 
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates(
+        groupId = "io.github.horacjusz",
+        artifactId = "library",
+        version = "0.0.1"
+    )
+
+    pom {
+        name = "My library"
+        description = "A library."
+        inceptionYear = "2025"
+        url = "https://github.com/Horacjusz/ComposeParticleEmitterFork/tree/second-attempt"
+        licenses {
+            license {
+                name = "XXX"
+                url = "YYY"
+                distribution = "ZZZ"
+            }
+        }
+        developers {
+            developer {
+                id = "XXX"
+                name = "YYY"
+                url = "ZZZ"
+            }
+        }
+        scm {
+            url = "XXX"
+            connection = "YYY"
+            developerConnection = "ZZZ"
+        }
+    }
 }
