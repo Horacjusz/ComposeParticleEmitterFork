@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import java.util.Base64
 
 val VERSION_NAME: String by project
 
@@ -92,20 +93,22 @@ afterEvaluate {
 }
 
 signing {
-    val signingKey = System.getenv("SIGNING_KEY")
+    val signingKeyEncoded = System.getenv("SIGNING_KEY")
     val signingKeyId = System.getenv("SIGNING_KEY_ID")
     val signingPassword = System.getenv("SIGNING_PASSWORD")
 
-    println("SIGNING_KEY length: ${signingKey?.length ?: "null"}")
+    println("SIGNING_KEY (base64) length: ${signingKeyEncoded?.length ?: "null"}")
     println("SIGNING_KEY_ID: ${signingKeyId ?: "null"}")
 
-    if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
-        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    if (!signingKeyEncoded.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
+        val decodedKey = String(Base64.getDecoder().decode(signingKeyEncoded))
+        useInMemoryPgpKeys(signingKeyId, decodedKey, signingPassword)
         sign(publishing.publications)
     } else {
         println("PGP signing skipped - missing key or password")
     }
 }
+
 
 
 
