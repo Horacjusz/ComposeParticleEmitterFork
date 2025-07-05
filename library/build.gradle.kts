@@ -5,7 +5,7 @@ val VERSION_NAME: String by project
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.vanniktech.publish") version "0.28.0"
+    id("com.vanniktech.maven.publish") version "0.28.0"
 
 }
 
