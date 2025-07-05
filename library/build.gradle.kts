@@ -104,10 +104,11 @@ afterEvaluate {
 
         if (!key.isNullOrBlank() && !password.isNullOrBlank()) {
             val decodedKey = try {
-                String(java.util.Base64.getDecoder().decode(key))
+                String(Base64.getDecoder().decode(key))
             } catch (e: IllegalArgumentException) {
                 key
             }
+
             useInMemoryPgpKeys(decodedKey, password)
         }
     }
