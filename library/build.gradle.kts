@@ -97,11 +97,17 @@ mavenPublishing {
 
 afterEvaluate {
     extensions.findByType(org.gradle.plugins.signing.SigningExtension::class.java)?.apply {
-        val signingKey = findProperty("signingKey") as String?
-        val signingPassword = findProperty("signingPassword") as String?
+        val key = System.getenv("SIGNING_KEY")
+        val password = System.getenv("SIGNING_PASSWORD")
 
-        if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
+        if (!key.isNullOrBlank() && !password.isNullOrBlank()) {
+            val decodedKey = try {
+                String(java.util.Base64.getDecoder().decode(key))
+            } catch (e: IllegalArgumentException) {
+                key
+            }
+            useInMemoryPgpKeys(decodedKey, password)
         }
     }
 }
+
