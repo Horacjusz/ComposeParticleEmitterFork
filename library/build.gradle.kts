@@ -10,23 +10,11 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.28.0"
 
 }
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.vanniktech.maven.publish") version "0.28.0"
 
-kotlin {
-    androidTarget {
-        publishLibraryVariants("release")
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                //put your multiplatform dependencies here
-            }
-        }
-    }
 }
 
 android {
@@ -83,7 +71,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.horacjusz",
         artifactId = "library",
-        version = VERSION_NAME
+        version = "0.0.1"
     )
 
     pom {
