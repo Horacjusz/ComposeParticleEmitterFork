@@ -1,13 +1,11 @@
 import com.vanniktech.maven.publish.SonatypeHost
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val VERSION_NAME: String by project
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.vanniktech.maven.publish") version "0.28.0"
+    id("com.vanniktech.publish") version "0.28.0"
 
 }
 
@@ -65,7 +63,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.horacjusz",
         artifactId = "library",
-        version = "0.0.1"
+        version = VERSION_NAME
     )
 
     pom {
