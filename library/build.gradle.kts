@@ -111,3 +111,15 @@ mavenPublishing {
         }
     }
 }
+
+
+afterEvaluate {
+    extensions.findByType(org.gradle.plugins.signing.SigningExtension::class.java)?.apply {
+        val signingKey = findProperty("signingKey") as String?
+        val signingPassword = findProperty("signingPassword") as String?
+
+        if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
+            useInMemoryPgpKeys(signingKey, signingPassword)
+        }
+    }
+}
