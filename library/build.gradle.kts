@@ -10,12 +10,6 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.28.0"
 
 }
-plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.vanniktech.maven.publish") version "0.28.0"
-
-}
 
 android {
     namespace = "io.github.horacjusz"
