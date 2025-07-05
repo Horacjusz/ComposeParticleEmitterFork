@@ -82,7 +82,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.horacjusz",
         artifactId = "library",
-        version = "0.0.1"
+        version = "X.Y.Z"
     )
 
     pom {
