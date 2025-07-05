@@ -1,4 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import java.util.Base64
+
 
 val VERSION_NAME: String by project
 
