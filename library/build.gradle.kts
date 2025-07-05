@@ -3,6 +3,7 @@ import com.vanniktech.maven.publish.SonatypeHost
 val VERSION_NAME: String by project
 
 plugins {
+    id("maven-publish")
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.vanniktech.maven.publish)
