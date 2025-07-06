@@ -2,7 +2,7 @@ import com.vanniktech.maven.publish.SonatypeHost
 import java.util.Base64
 
 
-val VERSION_NAME: String by project
+val VERSION_NAME = project.findProperty("versionName") as? String ?: "undefined"
 
 plugins {
     id("maven-publish")
@@ -73,7 +73,7 @@ mavenPublishing {
         name = "My library"
         description = "A library."
         inceptionYear = "2025"
-        url = "https://github.com/Horacjusz/ComposeParticleEmitterFork/tree/second-attempt"
+        url = "https://github.com/Horacjusz/ComposeParticleEmitterFork/tree/third-attempt"
         licenses {
             license {
                 name = "XXX"
